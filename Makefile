@@ -1,8 +1,12 @@
-all: all
-	gcc -Wall -fsanitize=address tree.c -o tree
-	gcc -Wall -fsanitize=address find.c -o find
-	gcc -Wall -fsanitize=address ls.c -o ls
+CFLAGS = -Wall -g -fsanitize=address
 
+all: all
+	gcc $(CFLAGS) tree.c -o tree
+	gcc $(CFLAGS) find.c -o find
+	gcc $(CFLAGS) ls.c -o ls
+
+%: %.c
+	gcc -o $@ $^
 
 clean:  
 	rm tree find ls
