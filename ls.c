@@ -58,19 +58,25 @@ void printPermissionsByGroup(int num){
             printf("-");
         }
     }
+    free(binaryNum);
 }
 
-void printPermissions(int modeInDecimal){
+void printPermissions(mode_t mode){
     //get decimal format -> octal format -> last 3 digits of octal
+    int modeInDecimal = mode;
     int octal = decimalToOctal(modeInDecimal);
     int* modeInOctal = trimOctal(octal); //gets last three digits
 
+    //print file type
+    char type = (S_ISDIR(mode)) ? 'd' : '-';
+    printf("%c", type);
+
     //print permission digit by digit
-    printf("-");
     for(int i = 0; i < 3; i++){
         printPermissionsByGroup(modeInOctal[i]);
     }
     printf(" ");
+    free(modeInOctal);
 }
 
 void printUserName(int uid){
@@ -114,6 +120,13 @@ int compareFunc(const void *p1, const void *p2){
     return strcasecmp(f1->fileName, f2->fileName);
 }
 
+void freeFiles(FileData *files, int capacity){
+    for(int i = 0; i < capacity; i++){
+        free(files[i].fileName);
+    }
+    free(files);
+}
+
 int main(int argc, char **argv){
     int lsL = 0;
     if(argc == 2 && strcmp(argv[1], "-l") == 0){
@@ -143,4 +156,7 @@ int main(int argc, char **argv){
 
     //print appropriate data
     printFileData(files, size, lsL);
+
+    //free data
+    freeFiles(files, capacity);
 }
