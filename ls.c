@@ -93,9 +93,9 @@ void printFileSize(int fs){
     printf("%d ", fs);
 }
 
-void printModTime(struct timespec ts){
+void printModTime(time_t t){
     char buffer[80];
-    strftime(buffer, 80, "%h %d %R", gmtime(&ts.tv_sec));
+    strftime(buffer, 80, "%h %d %R", gmtime(&t));
     printf("%s ", buffer);
 }
 
@@ -106,7 +106,7 @@ void printFileData(FileData *files, int size, int lsL){
             printUserName(files[i].statBuf.st_uid);
             printGroupName(files[i].statBuf.st_gid);
             printFileSize(files[i].statBuf.st_size);
-            printModTime(files[i].statBuf.st_mtimespec);
+            printModTime(files[i].statBuf.st_mtime);
         }
         printf("%s\n", files[i].fileName);   
     }
@@ -118,13 +118,6 @@ int compareFunc(const void *p1, const void *p2){
     FileData *f2 = (FileData *) p2;
 
     return strcasecmp(f1->fileName, f2->fileName);
-}
-
-void freeFiles(FileData *files, int capacity){
-    for(int i = 0; i < capacity; i++){
-        free(files[i].fileName);
-    }
-    free(files);
 }
 
 int main(int argc, char **argv){
@@ -158,5 +151,6 @@ int main(int argc, char **argv){
     printFileData(files, size, lsL);
 
     //free data
-    freeFiles(files, capacity);
+    free(files);
+    free(directory);
 }
