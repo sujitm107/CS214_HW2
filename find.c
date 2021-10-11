@@ -25,9 +25,6 @@ void find(char* searchStr, char* path){
 			if(strcmp(dir->d_name, ".git") == 0){
 				continue;
 			}
-			if(strcmp(dir->d_name, ".gitignore") == 0){
-				continue;
-			}
 			
 			// +2: one for the extra slash, and then one for the null-terminating
 			char* newPath = malloc((strlen(path) + strlen(dir->d_name) + 2) * sizeof(char));
