@@ -38,7 +38,6 @@ int decimalToOctal(int decNum){
 }
 
 int* trimOctal(int octal){
-    int i = 0;
     int* trimmedOctal = malloc(3 * sizeof(int));
 
     for(int i = 2; i >= 0; i--){
@@ -135,6 +134,9 @@ int main(int argc, char **argv){
     DIR *directory = opendir(".");
     struct dirent *dirEntry;
     while((dirEntry = readdir(directory)) != NULL){
+        if(dirEntry->d_name[0]=='.'){
+            continue;
+        }
         if(size == capacity){
             capacity *= 2;
             files = realloc(files, capacity * sizeof(FileData));
