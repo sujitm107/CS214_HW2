@@ -50,7 +50,7 @@ void insert(Node **head, Node* new){
 		Node *ptr = *head;
 		
 		Node *prev = NULL;
-		while(ptr!=NULL && strcmp(name, ptr->name)>0){
+		while(ptr!=NULL && strcasecmp(name, ptr->name)>0){
 			prev = ptr;
 			ptr = ptr->sibling;
 		}

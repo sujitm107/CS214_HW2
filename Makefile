@@ -6,7 +6,7 @@ all: all
 	gcc $(CFLAGS) ls.c -o ls
 
 %: %.c
-	gcc -o $@ $^
+	gcc $(CFLAGS) -o $@ $^
 
 clean:  
 	rm tree find ls
