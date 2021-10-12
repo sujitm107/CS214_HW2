@@ -80,12 +80,12 @@ void printPermissions(mode_t mode){
 
 void printUserName(int uid){
     struct passwd *pw = getpwuid(uid);
-    printf("%s  ", pw->pw_name);
+    printf("%s ", pw->pw_name);
 }
 
 void printGroupName(int gid){
     struct group *gr = getgrgid(gid);
-    printf("%s  ", gr->gr_name);
+    printf("%s ", gr->gr_name);
 }
 
 void printFileSize(int fs){
@@ -94,12 +94,12 @@ void printFileSize(int fs){
 
 void printModTime(time_t t){
     char buffer[80];
-    strftime(buffer, 80, "%h %d %R", gmtime(&t));
+    strftime(buffer, 80, "%h %d %R", localtime(&t));
     printf("%s ", buffer);
 }
 
 void printFileData(FileData *files, int size, int lsL){
-    for(int i = 2; i < size; i++){
+    for(int i = 0; i < size; i++){
         if(lsL){
             printPermissions(files[i].statBuf.st_mode);
             printUserName(files[i].statBuf.st_uid);
