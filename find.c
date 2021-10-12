@@ -37,6 +37,9 @@ void find(char* searchStr, char* path){
 			free(newPath);
 
 		} else {
+			if(dir->d_name[0] == '.'){
+				continue;
+			}
 			if(strstr(dir->d_name, searchStr)){
 				printf("%s%s\n", path, dir->d_name);
 			}
